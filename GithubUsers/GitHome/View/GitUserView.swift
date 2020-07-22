@@ -32,20 +32,20 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
         
         let headView = UIView()
         headView.backgroundColor = UIColorFromHex(rgbValue: 0xF2F2F2)
-        headView.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: 10)
+        headView.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: 0.5)
         self.tableView.tableHeaderView = headView
     
         self.tableView.reloadData()
         
-        
-        
-        self.viewModel.publishSubject.subscribe(onNext: { code in
-            print("第1次订阅：", code)
-            dismiss()
+        //MARK: 请求回调
+        self.viewModel.publishSubject.subscribe(onNext: { [weak self] code in
             let type : Int = code as! Int
             switch type {
             case 1:
-                self.tableView .reloadData()
+                 if let weakSelf = self  {
+                    dismiss()
+                    weakSelf.tableView.reloadData()
+                }
             default:
                 print(type)
             }
@@ -54,14 +54,11 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
         //请求数据
         showLoading()
         self.viewModel.getUserData(isFirst: true)
-        
-        
     }
     
     //MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return self.viewModel.dataArray.count;
+        return self.viewModel.dataArray.count
         
     }
     
@@ -69,8 +66,7 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let userCell = tableView.dequeueReusableCell(withIdentifier: "GitUserCell") as! GitUserCell
-        userCell.modelObject = nil
-        userCell.backgroundColor = UIColorRandom();
+        userCell.modelObject = self.viewModel.dataArray[indexPath.row] as AnyObject
         return userCell
     }
     

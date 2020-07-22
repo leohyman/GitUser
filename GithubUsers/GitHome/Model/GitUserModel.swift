@@ -11,9 +11,8 @@ import HandyJSON
 
 
 struct GitUserModel :  HandyJSON{
-    var productName: String?
-    var mainPic: String?
-
-    
-
+    var login: String?
+    var html_url: String?
+    var avatar_url: String?
+    var node_id: String?
 }

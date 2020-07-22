@@ -38,6 +38,7 @@
 		525DBF2E24C8233C00B95113 /* GitUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525DBF2D24C8233C00B95113 /* GitUserModel.swift */; };
 		525DBF3024C8237400B95113 /* GitUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525DBF2F24C8237400B95113 /* GitUserViewModel.swift */; };
 		525DBF3224C824D600B95113 /* GitUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525DBF3124C824D600B95113 /* GitUserCell.swift */; };
+		525DBF3624C83AD400B95113 /* UIImageView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525DBF3524C83AD400B95113 /* UIImageView+extension.swift */; };
 		77662E4B1929FDB6A8F349C2 /* Pods_GithubUsers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCA1491870A8B95E5F915E7 /* Pods_GithubUsers.framework */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		525DBF2D24C8233C00B95113 /* GitUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitUserModel.swift; sourceTree = "<group>"; };
 		525DBF2F24C8237400B95113 /* GitUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitUserViewModel.swift; sourceTree = "<group>"; };
 		525DBF3124C824D600B95113 /* GitUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitUserCell.swift; sourceTree = "<group>"; };
+		525DBF3524C83AD400B95113 /* UIImageView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+extension.swift"; sourceTree = "<group>"; };
 		9CCA1491870A8B95E5F915E7 /* Pods_GithubUsers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GithubUsers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2655A4536DCFB513FC267B1 /* Pods-GithubUsers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GithubUsers.debug.xcconfig"; path = "Target Support Files/Pods-GithubUsers/Pods-GithubUsers.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -214,6 +216,7 @@
 				525DBF0324C8226500B95113 /* UIImage+extension.swift */,
 				525DBF0424C8226500B95113 /* String+extension.swift */,
 				525DBF0524C8226500B95113 /* UIScrollView+extension.swift */,
+				525DBF3524C83AD400B95113 /* UIImageView+extension.swift */,
 			);
 			path = LZ_Extension;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 				525DBF2124C8226500B95113 /* LZColor.swift in Sources */,
 				525DBF1A24C8226500B95113 /* UIImage+extension.swift in Sources */,
 				525DBF1324C8226500B95113 /* LZBaseTabBarViewController.swift in Sources */,
+				525DBF3624C83AD400B95113 /* UIImageView+extension.swift in Sources */,
 				525DBF1524C8226500B95113 /* LZBaseNavViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
