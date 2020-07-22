@@ -26,7 +26,12 @@ class GitUserViewModel: LZBaseViewModel {
    
     //MARK: - 请求首页数据
     func getUserData(isFirst :Bool) {
-            
+        
+        if isFirst {
+            self.dataArray.removeAll()
+            self.indexPage = 1
+        }
+        
         APINetWork.request(.userList(indexPage), success: { [weak self] result in
             dismiss()
             if let weakSelf = self {

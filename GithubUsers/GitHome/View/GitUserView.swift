@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import UIKit
-
+import XREasyRefresh
 class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
     var viewModel = GitUserViewModel()
     
@@ -38,32 +37,50 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
     
         self.tableView.reloadData()
         
+        
         //MARK: 请求回调
         self.viewModel.publishSubject.subscribe(onNext: { [weak self] code in
-            let type : Int = code as! Int
-            switch type {
-            case 1:
-                 if let weakSelf = self  {
-                    dismiss()
-                    weakSelf.tableView.reloadData()
+            dismiss()
+            if let weakSelf = self  {
+                weakSelf.tableView.xr.endHeaderRefreshing()
+                weakSelf.tableView.xr.endFooterRefreshing()
+
+                weakSelf.tableView.reloadData()
+                let type : Int = code as! Int
+                    switch type {
+                        case 0:
+                            weakSelf.tableView.xr.endFooterRefreshingWithNoMoreData()
+                        default:
+                            print(type)
                 }
-            default:
-                print(type)
+                
+                if(weakSelf.viewModel.dataArray.count == 0){
+                    weakSelf.tableView.xr.endFooterRefreshingWithNoMoreData()
+                }
             }
+            
+            
         }).disposed(by: self.viewModel.disposeBag)
         
         //请求数据
         showLoading()
-        self.viewModel.getUserData(isFirst: true)
         
         
         // 添加下拉刷新
-//        self.tableView.xr.addPullToRefreshHeader(refreshHeader: XRBaseRefreshHeader(), heightForHeader: 65) { [weak self] in
-//            if let weakSelf = self {
-//
-//
-//            }
-//        }
+        self.tableView.xr.addPullToRefreshHeader(refreshHeader: XRActivityRefreshHeader(), heightForHeader: 65, ignoreTopHeight: XRRefreshMarcos.xr_StatusBarHeight) { [weak self] in
+            // do request...
+            
+            if let weakSelf = self {
+               weakSelf.viewModel.getUserData(isFirst: true)
+            }
+        }
+        
+        // 添加上拉加载更多
+        self.tableView.xr.addPullToRefreshFooter(refreshFooter: XRActivityRefreshFooter(), heightForFooter: 60, refreshingClosure: {  [weak self] in
+            if let weakSelf = self {
+                weakSelf.viewModel.getUserData(isFirst: false)
+            }
+        })
         
     }
     
@@ -77,7 +94,9 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let userCell = tableView.dequeueReusableCell(withIdentifier: "GitUserCell") as! GitUserCell
-        userCell.modelObject = self.viewModel.dataArray[indexPath.row] as AnyObject
+        if self.viewModel.dataArray.count > indexPath.row{
+            userCell.modelObject = self.viewModel.dataArray[indexPath.row] as AnyObject
+        }
         return userCell
     }
     
