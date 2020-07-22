@@ -198,7 +198,7 @@ fi
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ESPullToRefresh/ESPullToRefresh.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HandyJSON/HandyJSON.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework"
@@ -208,16 +208,13 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Result/Result.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SwiftyFitsize/SwiftyFitsize.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/XREasyRefreshControl/XREasyRefresh.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ESPullToRefresh/ESPullToRefresh.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HandyJSON/HandyJSON.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework"
@@ -227,12 +224,9 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Result/Result.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SwiftyFitsize/SwiftyFitsize.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/XREasyRefreshControl/XREasyRefresh.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

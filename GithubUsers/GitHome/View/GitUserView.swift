@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import XREasyRefresh
+import ESPullToRefresh
+
 class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
     var viewModel = GitUserViewModel()
     
@@ -25,15 +26,26 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
     
     //MARK: setupUI
     func setupUI()  {
-        self.addSubview(self.tableView)
-        self.tableView.snp.makeConstraints { (make) in
-            make.edges.equalTo(0);
+        
+        
+        //创建搜索框
+        let userheadView = GitUserHeadView.init(viewModel: self.viewModel)
+        addSubview(userheadView)
+        userheadView.snp.makeConstraints { (make) in
+            make.left.equalTo(0)
+            make.width.equalTo(kScreenWidth)
+            make.height.equalTo(40)
+            make.top.equalTo(0)
         }
         
-        let headView = UIView()
-        headView.backgroundColor = UIColorFromHex(rgbValue: 0xF2F2F2)
-        headView.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: 0.5)
-        self.tableView.tableHeaderView = headView
+        
+        self.addSubview(self.tableView)
+        self.tableView.snp.makeConstraints { (make) in
+            make.left.equalTo(0)
+            make.width.equalTo(kScreenWidth)
+            make.bottom.equalTo(0)
+            make.top.equalTo(userheadView.snp.bottom)
+        }
     
         self.tableView.reloadData()
         
@@ -42,20 +54,20 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
         self.viewModel.publishSubject.subscribe(onNext: { [weak self] code in
             dismiss()
             if let weakSelf = self  {
-                weakSelf.tableView.xr.endHeaderRefreshing()
-                weakSelf.tableView.xr.endFooterRefreshing()
+                weakSelf.tableView.es.stopPullToRefresh()
+                weakSelf.tableView.es.stopLoadingMore()
 
                 weakSelf.tableView.reloadData()
                 let type : Int = code as! Int
                     switch type {
                         case 0:
-                            weakSelf.tableView.xr.endFooterRefreshingWithNoMoreData()
-                        default:
-                            print(type)
+                        weakSelf.tableView.es.noticeNoMoreData()
+
+                    default:break
                 }
                 
                 if(weakSelf.viewModel.dataArray.count == 0){
-                    weakSelf.tableView.xr.endFooterRefreshingWithNoMoreData()
+                    weakSelf.tableView.es.noticeNoMoreData()
                 }
             }
             
@@ -64,23 +76,26 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
         
         //请求数据
         showLoading()
-        
+        self.viewModel.getUserData(isFirst: true)
         
         // 添加下拉刷新
-        self.tableView.xr.addPullToRefreshHeader(refreshHeader: XRActivityRefreshHeader(), heightForHeader: 65, ignoreTopHeight: XRRefreshMarcos.xr_StatusBarHeight) { [weak self] in
-            // do request...
-            
-            if let weakSelf = self {
-               weakSelf.viewModel.getUserData(isFirst: true)
+        self.tableView.es.addPullToRefresh {
+            [weak self] in
+            /// Do anything you want...
+            if let waekSelf = self {
+                waekSelf.viewModel.getUserData(isFirst: true)
             }
         }
         
         // 添加上拉加载更多
-        self.tableView.xr.addPullToRefreshFooter(refreshFooter: XRActivityRefreshFooter(), heightForFooter: 60, refreshingClosure: {  [weak self] in
-            if let weakSelf = self {
-                weakSelf.viewModel.getUserData(isFirst: false)
+        self.tableView.es.addInfiniteScrolling {
+            [weak self] in
+            /// Do anything you want...
+             if let waekSelf = self {
+                         
+                waekSelf.viewModel.getUserData(isFirst: false)
             }
-        })
+        }
         
     }
     
@@ -102,8 +117,14 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
     
     
     //MARK: UITableViewDelegate
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if self.viewModel.dataArray.count > indexPath.row{
+            let userModel = self.viewModel.dataArray[indexPath.row] as! GitUserModel
+            let webVC = LZWebViewController()
+            webVC.webUrl = userModel.html_url
+            currentVC()?.navigationController?.pushViewController(webVC, animated: true)
+        }
+        
     }
     
 
@@ -112,6 +133,7 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
         let tableView = LZBaseTableView(frame: CGRect.zero, style: .plain)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = 50
         tableView.separatorStyle = .none
         tableView.register(GitUserCell.self, forCellReuseIdentifier: "GitUserCell")
         return tableView

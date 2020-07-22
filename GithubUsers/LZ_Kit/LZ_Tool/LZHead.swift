@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyFitsize
 import SnapKit
 import Kingfisher
 import ReactiveCocoa

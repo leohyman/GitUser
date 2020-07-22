@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyFitsize
 
 class LZBaseNavViewController: UINavigationController ,UIGestureRecognizerDelegate ,UINavigationControllerDelegate{
 
@@ -18,7 +17,7 @@ class LZBaseNavViewController: UINavigationController ,UIGestureRecognizerDelega
         self.navigationBar.barStyle = .black
         self.navigationBar.barTintColor = UIColor.white
         self.navigationBar.titleTextAttributes = [.foregroundColor: UIColorFromHex(rgbValue: 0x363636),
-                                                  .font:ktextFont(size: 17)~]
+                                                  .font:ktextFont(size: 17)]
         self.navigationBar.isTranslucent = false
         self.delegate = self
         

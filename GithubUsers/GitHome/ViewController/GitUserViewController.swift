@@ -27,7 +27,7 @@ class GitUserViewController: LZBaseViewController {
             make.top.equalTo(0.5)
             make.left.right.bottom.equalTo(0)
         }
-
+        
     }
 
     

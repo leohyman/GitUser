@@ -13,11 +13,9 @@ target 'GithubUsers' do
   pod 'Alamofire'
   pod 'Moya/RxSwift'
   pod 'Kingfisher'
-  pod 'SwiftyFitsize'
-  pod 'RxDataSources', '~> 3.0'
   pod 'ReactiveCocoa'
   pod 'PKHUD'
-  pod 'XREasyRefreshControl'
+  pod 'ESPullToRefresh'
   pod 'IQKeyboardManagerSwift'
 
 end

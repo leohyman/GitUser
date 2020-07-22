@@ -17,7 +17,7 @@ class GitUserViewModel: LZBaseViewModel {
         print("\(self)释放了");
     }
     
-    private var indexPage: Int = 1
+    private var indexPage: Int = 2
     
     override init() {
         super.init()
@@ -32,7 +32,7 @@ class GitUserViewModel: LZBaseViewModel {
             self.indexPage = 1
         }
         
-        APINetWork.request(.userList(indexPage), success: { [weak self] result in
+        APINetWork.request(.userList(self.indexPage), success: { [weak self] result in
             dismiss()
             if let weakSelf = self {
                 let dataArray = JSON(result)
@@ -52,7 +52,7 @@ class GitUserViewModel: LZBaseViewModel {
                        weakSelf.publishSubject.onNext(0)
                    } else
                    {
-                       weakSelf.indexPage = weakSelf.indexPage + 1
+                       weakSelf.indexPage += 1
                        weakSelf.publishSubject.onNext(1)
                    }
                 

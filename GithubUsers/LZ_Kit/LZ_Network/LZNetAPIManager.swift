@@ -122,6 +122,7 @@ struct APINetWork {
                       //如果数据返回成功则直接将结果转为json
                       try response.filterSuccessfulStatusCodes()
                       let json =  try JSON(response.mapJSON())
+                      print(json)
                       successCallback(json)
                   } catch let error {
                       //如果数据获取失败，则返回错误状态码

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftyFitsize
 
 class LZBaseTabBarViewController: UITabBarController , LZBaseTabbarDelegate , UITabBarControllerDelegate{
 
@@ -31,14 +30,14 @@ class LZBaseTabBarViewController: UITabBarController , LZBaseTabbarDelegate , UI
         //未被选中的颜色.代销
         UITabBarItem.appearance().setTitleTextAttributes([
             .foregroundColor : UIColorFromHex(rgbValue: 0x868686),
-            .font : ktextFont(size: 10)~]
+            .font : ktextFont(size: 10)]
             , for: .normal)
 
 
         //选中的大小, 颜色
         UITabBarItem.appearance().setTitleTextAttributes([
             .foregroundColor:UIColorFromHex(rgbValue: 0xFF661B),
-            .font: ktextFont(size: 10)~]
+            .font: ktextFont(size: 10)]
             , for: .selected)
 
         UITabBar.appearance().unselectedItemTintColor = UIColorFromHex(rgbValue: 0x868686)
