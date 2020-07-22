@@ -98,6 +98,12 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
             }
         }
         
+      
+        
+        self.tableView.expiredTimeInterval = 20.0
+        
+        
+        
     }
     
     //MARK: UITableViewDataSource

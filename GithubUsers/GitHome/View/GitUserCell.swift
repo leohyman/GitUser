@@ -44,22 +44,29 @@ class GitUserCell: LZBaseTableViewCell {
         
         //名字
          self.contentView.addSubview(self.nameLab)
-         self.nameLab.snp.makeConstraints { (make) in
-            make.left.equalTo(self.headImageView.snp.right).offset(10)
-            make.top.equalTo(self.headImageView)
-            make.height.equalTo(15)
-         }
-        
+
         //分数
         self.contentView.addSubview(self.scoreNumLab)
+   
+
+        //解决:当名称太长而将分数推到边缘时，请使分数完整显示，并通过修剪文本结尾来缩小名称标签（例如“ verylongname ... 109.45402”）
+        self.nameLab.snp.makeConstraints { (make) in
+            make.top.equalTo(self.headImageView)
+            make.left.equalTo(self.headImageView.snp.right).offset(10)
+            make.right.greaterThanOrEqualTo(self.scoreNumLab.snp.left).offset(-10).priority(.medium)
+        }
+        self.nameLab.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+                
         self.scoreNumLab.snp.makeConstraints { (make) in
-            make.left.equalTo(self.nameLab.snp.right).offset(5)
-            make.centerY.equalTo(self.nameLab.snp.centerY)
-            make.height.equalTo(15)
+            make.top.equalTo(self.nameLab)
+            make.left.greaterThanOrEqualTo(self.nameLab.snp.right).offset(10).priority(.high)
             make.right.equalTo(-15)
         }
+        self.scoreNumLab.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         
-       
+        
+        
+        
         //详情
         self.contentView.addSubview(self.htmlUrlLab)
         self.htmlUrlLab.snp.makeConstraints { (make) in
@@ -83,8 +90,6 @@ class GitUserCell: LZBaseTableViewCell {
             self.nameLab.text = userModel.login
             //计算名字的宽度
             self.scoreNumLab.text = userModel.node_id
-            //当名称太长而将分数推到边缘时，请使分数完整显示，并通过修剪文本结尾来缩小名称标签（例如“ verylongname ... 109.45402”）
-            self.scoreNumLab.contentHuggingPriority(for: .horizontal)
             self.htmlUrlLab.text = userModel.html_url
             
         }

@@ -57,6 +57,7 @@ class GitUserHeadView: LZBaseView {
 
 extension GitUserHeadView: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        showLoading()
         self.viewModel.searchUser(search: textField.text ?? "", isFirst: true)
         return true
     }
