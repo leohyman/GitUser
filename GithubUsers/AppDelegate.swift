@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import UIKit
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -36,13 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: 本地初始化
     func initLocal() {
         
-        
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.enableAutoToolbar = false
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
     }
-    
-    
-    
- 
-
-
 }
 

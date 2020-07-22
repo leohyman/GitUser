@@ -76,14 +76,14 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
         
         //请求数据
         showLoading()
-        self.viewModel.getUserData(isFirst: true)
+        self.viewModel.searchUser(search: self.viewModel.searchName , isFirst: true)
         
         // 添加下拉刷新
         self.tableView.es.addPullToRefresh {
             [weak self] in
             /// Do anything you want...
             if let waekSelf = self {
-                waekSelf.viewModel.getUserData(isFirst: true)
+                waekSelf.viewModel.searchUser(search: waekSelf.viewModel.searchName, isFirst: true)
             }
         }
         
@@ -93,7 +93,8 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
             /// Do anything you want...
              if let waekSelf = self {
                          
-                waekSelf.viewModel.getUserData(isFirst: false)
+                waekSelf.viewModel.searchUser(search: waekSelf.viewModel.searchName , isFirst: false)
+
             }
         }
         
@@ -134,6 +135,7 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 50
+        tableView.keyboardDismissMode = .onDrag
         tableView.separatorStyle = .none
         tableView.register(GitUserCell.self, forCellReuseIdentifier: "GitUserCell")
         return tableView

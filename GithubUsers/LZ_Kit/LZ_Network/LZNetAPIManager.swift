@@ -56,7 +56,8 @@ extension APPApi : TargetType{
     //请求类型
     public var method: Moya.Method {
         switch self {
-        case .userList(_):
+        case .userList(_),
+            .search(_,_):
             return .get
         default:
             return .post
