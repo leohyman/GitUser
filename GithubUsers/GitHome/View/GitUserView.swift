@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UIKit
 
 class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
     var viewModel = GitUserViewModel()
@@ -54,6 +55,16 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
         //请求数据
         showLoading()
         self.viewModel.getUserData(isFirst: true)
+        
+        
+        // 添加下拉刷新
+//        self.tableView.xr.addPullToRefreshHeader(refreshHeader: XRBaseRefreshHeader(), heightForHeader: 65) { [weak self] in
+//            if let weakSelf = self {
+//
+//
+//            }
+//        }
+        
     }
     
     //MARK: UITableViewDataSource

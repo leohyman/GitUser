@@ -35,19 +35,18 @@ class GitUserCell: LZBaseTableViewCell {
             make.width.height.equalTo(40)
             make.centerY.equalTo(self.contentView.snp.centerY)
         }
+        
+        //获取大小
         self.headImageView.setNeedsLayout()
-        self.headImageView.setCornerImage()
-        
-        
-        
-        
+        //切圆角
+        self.headImageView.clipRectCorner(direction: .allCorners, cornerRadius: 20)
 
+        
         //名字
          self.contentView.addSubview(self.nameLab)
          self.nameLab.snp.makeConstraints { (make) in
             make.left.equalTo(self.headImageView.snp.right).offset(10)
             make.top.equalTo(self.headImageView)
-            make.width.equalTo(100)
             make.height.equalTo(15)
          }
         
@@ -56,8 +55,8 @@ class GitUserCell: LZBaseTableViewCell {
         self.scoreNumLab.snp.makeConstraints { (make) in
             make.left.equalTo(self.nameLab.snp.right).offset(5)
             make.centerY.equalTo(self.nameLab.snp.centerY)
-            make.right.equalTo(-15)
             make.height.equalTo(15)
+            make.right.equalTo(-15)
         }
         
        
@@ -73,15 +72,21 @@ class GitUserCell: LZBaseTableViewCell {
         self.lineView.isHidden = false
     }
 
+    //MARK:-利用set方法赋值
     override var modelObject : AnyObject?{
         didSet{
 
-            
+            //复制
             let userModel = modelObject as! GitUserModel
             let url = URL(string: userModel.avatar_url ?? "")
             self.headImageView.kf.setImage(with: url, placeholder: UIImage(named: "icon_mine_team_defulat"))
-            self.nameLab.text = "张三"
-            self.scoreNumLab.text = "123456789"
+            self.nameLab.text = userModel.login
+            //计算名字的宽度
+            self.scoreNumLab.text = userModel.node_id
+            //当名称太长而将分数推到边缘时，请使分数完整显示，并通过修剪文本结尾来缩小名称标签（例如“ verylongname ... 109.45402”）
+            self.scoreNumLab.contentHuggingPriority(for: .horizontal)
+            self.htmlUrlLab.text = userModel.html_url
+            
         }
 
     }
