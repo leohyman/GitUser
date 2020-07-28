@@ -43,22 +43,22 @@ class GitUserHeadView: LZBaseView {
         textField.returnKeyType = .search
         textField.delegate = self
         
-        //当文本框内容改变时，将内容输出到控制台上
-        textField.rx.text.orEmpty.asObservable()
-            .subscribe(onNext: {[weak self] in
-                if let weakSelf = self{
-                    weakSelf.viewModel.searchName = $0
-                }
-            })
-            .disposed(by: self.viewModel.disposeBag)
+//        //当文本框内容改变时，将内容输出到控制台上
+//        textField.rx.text.orEmpty.asObservable()
+//            .subscribe(onNext: {[weak self] in
+//                if let weakSelf = self{
+////                    weakSelf.viewModel.searchName = $0
+//                }
+//            })
+//            .disposed(by: self.viewModel.disposeBag)
     }
 }
 
 
 extension GitUserHeadView: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        showLoading()
-        self.viewModel.searchUser(search: textField.text ?? "", isFirst: true)
+//        showLoading()
+//        self.viewModel.searchUser(search: textField.text ?? "", isFirst: true)
         return true
     }
 }

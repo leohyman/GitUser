@@ -7,102 +7,99 @@
 //
 
 import UIKit
-import SwiftyJSON
+import RxCocoa
+import RxSwift
+import Moya
 
 class GitUserViewModel: LZBaseViewModel {
 
+    var page = 1
     
+    let tableData = BehaviorRelay<[GitHubUser]>(value: [])
     
+    let keyword = BehaviorRelay(value:"swift")
+    
+    let headerLoading = ActivityIndicator()
+    let footerLoading = ActivityIndicator()
+    
+
     deinit {
         print("\(self)释放了");
     }
 
-    //搜索的名字
-    var searchName: String = ""
-
     
-    //分页
-    private var indexPage: Int = 1
-
+    
     override init() {
         super.init()
-    }
-
-    
-    //MARK :- 搜索用户
-    func searchUser(search:String,isFirst :Bool) {
-        if isFirst {
-            self.dataArray.removeAll()
-            self.indexPage = 1
-        }
-        APINetWork.request((search.count == 0) ?  .userList(self.indexPage) : .search(search, self.indexPage), success: { [weak self] result in
-            dismiss()
-            if let weakSelf = self {
-                
-                //根据是否搜索的结果
-                if search.count == 0{
-                    let dataArray = JSON(result)
-                    //解析数据
-                    if let items = dataArray.arrayObject {
-                        for item in items {
-                            let dataDict = item as? [String : Any]
-                            if let object = GitUserModel.deserialize(from: dataDict) {
-                                //添加元素
-                                weakSelf.dataArray.append(object)
-                            }
-                        }
-                    }
-                    
-                    //没有数据
-                    if dataArray.count == 0{
-                        weakSelf.publishSubject.onNext(0)
-                        return
-                    }
-                } else {
-                    let dictionary = JSON(result)
-                    if let items = dictionary["items"].arrayObject {
-                        for item in items {
-                            let dataDict = item as? [String : Any]
-                            if let object = GitUserModel.deserialize(from: dataDict) {
-                                //添加元素
-                                weakSelf.dataArray.append(object)
-                            }
-                        }
-                        //没有数据
-                        if items.count == 0{
-                            weakSelf.publishSubject.onNext(0)
-                            return
-                        }
-                    }
-                }
-                
-                //分页加一
-                weakSelf.indexPage += 1
-                weakSelf.publishSubject.onNext(1)
-
-            }
-                  
-            //回调
-           }, error: { [weak self] code in
-              if let weakSelf = self  {
-                   dismiss()
-                   weakSelf.publishSubject.onNext(1)
-               }
-           }) { [weak self] (error) in
-                if let weakSelf = self  {
-                   dismiss()
-                   weakSelf.publishSubject.onNext(1)
-               }
-           }
-        
-        
-        
-        
         
     }
     
-    
-    
+      /// transform singnal
+     /// - Parameter input: (searchAction, heaserRefresh, footerRefresh)
+     func bindAction(input:(searchAction: Observable<String>,
+                           headerRefresh: Observable<Void>,
+                           footerRefresh: Observable<Void> )){
+
+         // search result sequence
+         input.searchAction
+            .filter { !$0.isEmpty }
+            .flatMapLatest({ [weak self] keyword -> Observable<GitHubUsers> in
+                 guard let self = self else { return Observable.empty() }
+                 self.page = 1
+                 return self.request(login: keyword, page: self.page)
+            }).subscribe(onNext: { [weak self] (gitHubUsers) in
+                 guard let self = self else { return }
+                 self.tableData.accept(gitHubUsers.items)
+            }, onError: { (error) in
+                print("error")
+         }).disposed(by: disposeBag)
+
+         // bind search content to keyword
+         input.searchAction
+             .filter { !$0.isEmpty }
+             .distinctUntilChanged()
+             .asObservable()
+             .bind(to: keyword).disposed(by: disposeBag)
+
+        // headerRefresh result sequence
+        input.headerRefresh
+         .startWith(()) // when app launched start once
+            .flatMapLatest({ [weak self] _ -> Observable<GitHubUsers> in
+                 guard let self = self else { return Observable.empty() }
+                 self.page = 1
+                 return self.request(login: self.keyword.value, page: self.page).trackActivity(self.headerLoading)
+
+         }).subscribe(onNext: { [weak self] (gitHubUsers) in
+                 guard let self = self else { return }
+                 self.tableData.accept(gitHubUsers.items)
+            }, onError: { (error) in
+
+                 print("error")
+
+         }).disposed(by: disposeBag)
+
+        // footerRefresh result sequence
+        input.footerRefresh
+            .flatMapLatest({ [weak self] _ -> Observable<GitHubUsers> in
+                 guard let self = self else { return Observable.empty() }
+                 self.page += 1
+             return self.request(login: self.keyword.value, page: self.page).trackActivity(self.footerLoading)
+            }).subscribe(onNext: { [weak self] (gitHubUsers) in
+                    guard let self = self else { return }
+                    self.tableData.accept(self.tableData.value + gitHubUsers.items )
+               }, onError: { (error) in
+                    print("error")
+
+            }).disposed(by: disposeBag)
+
+     }
+
+     func request(login: String, page: Int) -> Observable<GitHubUsers> {
+        return gitHubProvider.rx.request(.gitHubUsers(login, page))
+            .filterSuccessfulStatusCodes()
+            .mapObject(GitHubUsers.self)
+            .asObservable()
+     }
 }
 
 

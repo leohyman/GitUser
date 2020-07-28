@@ -109,7 +109,7 @@ extension LZAlertViewController {
         let footerViewLineHight: CGFloat = 10
 
         self.contentHeight = CGFloat((dataArray.count * Int(rowHight))) + footerViewLineHight
-        if kisPhoneX(){
+        if Tool.kisPhoneX{
             self.contentHeight += 34;
         }
         
@@ -161,16 +161,16 @@ extension LZAlertViewController {
                 }
             }
             
-            itemBtn.reactive.controlEvents(.touchUpInside).observeResult { (button) in
-                if(index == dataArray.count - 1){
-                    self.sheetViewDismiss(animate: true)
-                    return
-                }
-                if (self.sureBlock != nil) {
-                    self.sureBlock!(String(index))
-                }
-                self.sheetViewDismiss(animate: true)
-            }
+//            itemBtn.reactive.controlEvents(.touchUpInside).observeResult { (button) in
+//                if(index == dataArray.count - 1){
+//                    self.sheetViewDismiss(animate: true)
+//                    return
+//                }
+//                if (self.sureBlock != nil) {
+//                    self.sureBlock!(String(index))
+//                }
+//                self.sheetViewDismiss(animate: true)
+//            }
         }
     }
     

@@ -7,16 +7,21 @@
 //
 
 import UIKit
-import ESPullToRefresh
+import RxSwift
+import RxCocoa
+import MJRefresh
 
 class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
-    var viewModel = GitUserViewModel()
+    private var viewModel = GitUserViewModel()
+    
+    let isHeaderLoading = BehaviorRelay(value: false)
+    let isFooterLoading = BehaviorRelay(value: false)
     
     override init(viewModel: LZBaseViewModel) {
         super.init(viewModel: viewModel)
         self.viewModel = viewModel as! GitUserViewModel
         setupUI()
-        
+        bindViewModel()
     }
     
     required init?(coder: NSCoder) {
@@ -24,8 +29,71 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
     }
     
     
+    func bindViewModel() {
+        let searchAction = searchBar.rx.text.orEmpty.asObservable()
+        
+        isHeaderLoading.bind(to: tableView.mj_header!.rx.loading).disposed(by: self.viewModel.disposeBag)
+        
+        isFooterLoading.bind(to: tableView.mj_footer!.rx.loading).disposed(by: self.viewModel.disposeBag)
+        
+    
+        
+        
+        
+    }
+    
     //MARK: setupUI
     func setupUI()  {
+        
+        addSubview(searchBar)
+        addSubview(tableView)
+        
+        searchBar.snp.makeConstraints { (make) in
+            make.top.left.equalTo(0)
+            make.height.equalTo(44)
+            make.width.equalTo(kScreenWidth)
+        }
+        
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalTo(searchBar.snp_bottomMargin)
+            make.left.right.equalTo(self)
+            make.bottom.equalTo(0)
+        }
+        
+    
+        tableView.mj_header = MJRefreshNormalHeader()
+        tableView.mj_footer = MJRefreshBackNormalFooter()
+        
+        tableView.rx.willEndDragging.subscribe{[weak self] _ in
+
+            guard let self = self else {return}
+            self.searchBar.resignFirstResponder()
+        }.disposed(by: self.viewModel.disposeBag)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         //创建搜索框
@@ -52,55 +120,55 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
         
         //MARK: 请求回调
         self.viewModel.publishSubject.subscribe(onNext: { [weak self] code in
-            dismiss()
-            if let weakSelf = self  {
-                weakSelf.tableView.es.stopPullToRefresh()
-                weakSelf.tableView.es.stopLoadingMore()
-
-                weakSelf.tableView.reloadData()
-                let type : Int = code as! Int
-                    switch type {
-                        case 0:
-                        weakSelf.tableView.es.noticeNoMoreData()
-
-                    default:break
-                }
-                
-                if(weakSelf.viewModel.dataArray.count == 0){
-                    weakSelf.tableView.es.noticeNoMoreData()
-                }
-            }
+//            dismiss()
+//            if let weakSelf = self  {
+//                weakSelf.tableView.es.stopPullToRefresh()
+//                weakSelf.tableView.es.stopLoadingMore()
+//
+//                weakSelf.tableView.reloadData()
+//                let type : Int = code as! Int
+//                    switch type {
+//                        case 0:
+//                        weakSelf.tableView.es.noticeNoMoreData()
+//
+//                    default:break
+//                }
+//
+//                if(weakSelf.viewModel.dataArray.count == 0){
+//                    weakSelf.tableView.es.noticeNoMoreData()
+//                }
+//            }
             
             
         }).disposed(by: self.viewModel.disposeBag)
         
         //请求数据
-        showLoading()
-        self.viewModel.searchUser(search: self.viewModel.searchName , isFirst: true)
+//        showLoading()
+//        self.viewModel.searchUser(search: self.viewModel.searchName , isFirst: true)
         
-        // 添加下拉刷新
-        self.tableView.es.addPullToRefresh {
-            [weak self] in
-            /// Do anything you want...
-            if let waekSelf = self {
-                waekSelf.viewModel.searchUser(search: waekSelf.viewModel.searchName, isFirst: true)
-            }
-        }
-        
-        // 添加上拉加载更多
-        self.tableView.es.addInfiniteScrolling {
-            [weak self] in
-            /// Do anything you want...
-             if let waekSelf = self {
-                         
-                waekSelf.viewModel.searchUser(search: waekSelf.viewModel.searchName , isFirst: false)
-
-            }
-        }
+//        // 添加下拉刷新
+//        self.tableView.es.addPullToRefresh {
+//            [weak self] in
+//            /// Do anything you want...
+//            if let waekSelf = self {
+//                waekSelf.viewModel.searchUser(search: waekSelf.viewModel.searchName, isFirst: true)
+//            }
+//        }
+//
+//        // 添加上拉加载更多
+//        self.tableView.es.addInfiniteScrolling {
+//            [weak self] in
+//            /// Do anything you want...
+//             if let waekSelf = self {
+//
+//                waekSelf.viewModel.searchUser(search: waekSelf.viewModel.searchName , isFirst: false)
+//
+//            }
+//        }
         
       
         
-        self.tableView.expiredTimeInterval = 20.0
+//        self.tableView.expiredTimeInterval = 20.0
         
         
         
@@ -126,10 +194,10 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
     //MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if self.viewModel.dataArray.count > indexPath.row{
-            let userModel = self.viewModel.dataArray[indexPath.row] as! GitUserModel
-            let webVC = LZWebViewController()
-            webVC.webUrl = userModel.html_url
-            currentVC()?.navigationController?.pushViewController(webVC, animated: true)
+//            let userModel = self.viewModel.dataArray[indexPath.row] as! GitUserModel
+//            let webVC = LZWebViewController()
+//            webVC.webUrl = userModel.html_url
+//            currentVC()?.navigationController?.pushViewController(webVC, animated: true)
         }
         
     }
@@ -145,6 +213,13 @@ class GitUserView: LZBaseView ,UITableViewDelegate,UITableViewDataSource{
         tableView.separatorStyle = .none
         tableView.register(GitUserCell.self, forCellReuseIdentifier: "GitUserCell")
         return tableView
+    }()
+    
+    
+    
+    lazy var searchBar : UISearchBar =  {
+        let searchBar = UISearchBar()
+        return searchBar
     }()
     
 }

@@ -83,14 +83,14 @@ class GitUserCell: LZBaseTableViewCell {
     override var modelObject : AnyObject?{
         didSet{
 
-            //复制
-            let userModel = modelObject as! GitUserModel
-            let url = URL(string: userModel.avatar_url ?? "")
+            //赋值
+            let userModel = modelObject as! GitHubUser
+            let url = URL(string: userModel.avatarUrl ?? "")
             self.headImageView.kf.setImage(with: url, placeholder: UIImage(named: "icon_mine_team_defulat"))
             self.nameLab.text = userModel.login
-            //计算名字的宽度
-            self.scoreNumLab.text = userModel.node_id
-            self.htmlUrlLab.text = userModel.html_url
+//            //计算名字的宽度
+//            self.scoreNumLab.text = userModel.node_id
+//            self.htmlUrlLab.text = userModel.html_url
             
         }
 

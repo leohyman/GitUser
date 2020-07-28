@@ -7,7 +7,49 @@
 //
 
 import UIKit
-import PKHUD
+
+
+struct configs {
+    struct NetWork {
+        static let kBaseUrl = "https://api.github.com"
+    }
+}
+
+
+
+struct Tool {
+    static var kisPhoneX:Bool{
+        
+        guard let w = UIApplication.shared.delegate?.window, let unwrapedWindow = w else {
+            return false
+        }
+        
+        if #available(iOS 11.0, *) {
+            if unwrapedWindow.safeAreaInsets.left > 0 || unwrapedWindow.safeAreaInsets.bottom > 0 {
+                return true
+            }
+        } else {
+            
+        }
+        return false
+    }
+    
+    static var  kBarHeight:CGFloat {
+        return kisPhoneX ? 88 : 64
+    }
+    
+    
+    static var kNavHeight: CGFloat {
+        return kisPhoneX ? 34 : 0
+    }
+    
+    
+    
+}
+
+
+
+
 
 // MARK: - 查找顶层控制器、
 // 获取顶层控制器 根据window
@@ -50,20 +92,9 @@ private func getTopVC(withCurrentVC VC :UIViewController?) -> UIViewController? 
     }
 }
 
-public func showLoading(){
-    
-    HUD.show(.systemActivity)
-    
-}
-    
 
-public func showDelayedDismissTitle(title:String ){
-    HUD.show(.label(title))
-}
 
-public func dismiss() {
-    HUD.hide(animated: true)
-}
+
 
 
 

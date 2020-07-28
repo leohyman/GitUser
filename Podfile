@@ -5,17 +5,15 @@ source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
 
 target 'GithubUsers' do
   use_frameworks!
+  pod 'Kingfisher'
+  pod 'SnapKit'
   pod 'RxSwift'
   pod 'RxCocoa'
-  pod 'SnapKit'
-  pod 'HandyJSON'
-  pod 'SwiftyJSON'
-  pod 'Alamofire'
   pod 'Moya/RxSwift'
-  pod 'Kingfisher'
-  pod 'ReactiveCocoa'
-  pod 'PKHUD'
-  pod 'ESPullToRefresh'
-  pod 'IQKeyboardManagerSwift'
+  pod 'ObjectMapper'
+  pod 'MJRefresh'
+  pod 'SVProgressHUD'
+  pod 'Moya-ObjectMapper/RxSwift'
 
+  
 end

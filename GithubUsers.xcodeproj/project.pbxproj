@@ -39,6 +39,11 @@
 		525DBF3024C8237400B95113 /* GitUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525DBF2F24C8237400B95113 /* GitUserViewModel.swift */; };
 		525DBF3224C824D600B95113 /* GitUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525DBF3124C824D600B95113 /* GitUserCell.swift */; };
 		525DBF3824C856AD00B95113 /* GitUserHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525DBF3724C856AD00B95113 /* GitUserHeadView.swift */; };
+		52FAEAC224D001B10008B973 /* MJRefresh+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FAEAC124D001B10008B973 /* MJRefresh+Rx.swift */; };
+		52FAEAC824D0150B0008B973 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FAEAC724D0150B0008B973 /* ActivityIndicator.swift */; };
+		52FAEACF24D01CF70008B973 /* Response+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FAEACE24D01CF70008B973 /* Response+ObjectMapper.swift */; };
+		52FAEAD424D01D060008B973 /* ObservableType+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FAEAD224D01D040008B973 /* ObservableType+ObjectMapper.swift */; };
+		52FAEAD524D01D060008B973 /* Single+ObjectMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FAEAD324D01D060008B973 /* Single+ObjectMapper.swift */; };
 		77662E4B1929FDB6A8F349C2 /* Pods_GithubUsers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCA1491870A8B95E5F915E7 /* Pods_GithubUsers.framework */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +95,11 @@
 		525DBF2F24C8237400B95113 /* GitUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitUserViewModel.swift; sourceTree = "<group>"; };
 		525DBF3124C824D600B95113 /* GitUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitUserCell.swift; sourceTree = "<group>"; };
 		525DBF3724C856AD00B95113 /* GitUserHeadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitUserHeadView.swift; sourceTree = "<group>"; };
+		52FAEAC124D001B10008B973 /* MJRefresh+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MJRefresh+Rx.swift"; sourceTree = "<group>"; };
+		52FAEAC724D0150B0008B973 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		52FAEACE24D01CF70008B973 /* Response+ObjectMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Response+ObjectMapper.swift"; sourceTree = "<group>"; };
+		52FAEAD224D01D040008B973 /* ObservableType+ObjectMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ObservableType+ObjectMapper.swift"; sourceTree = "<group>"; };
+		52FAEAD324D01D060008B973 /* Single+ObjectMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Single+ObjectMapper.swift"; sourceTree = "<group>"; };
 		9CCA1491870A8B95E5F915E7 /* Pods_GithubUsers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GithubUsers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2655A4536DCFB513FC267B1 /* Pods-GithubUsers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GithubUsers.debug.xcconfig"; path = "Target Support Files/Pods-GithubUsers/Pods-GithubUsers.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -176,6 +186,7 @@
 		525DBEF324C8226500B95113 /* LZ_Kit */ = {
 			isa = PBXGroup;
 			children = (
+				52FAEAC924D01CDE0008B973 /* Moya-ObjectMapper */,
 				525DBEF424C8226500B95113 /* LZ_BaseClass */,
 				525DBEFE24C8226500B95113 /* LZ_Network */,
 				525DBF0024C8226500B95113 /* LZ_Extension */,
@@ -216,6 +227,7 @@
 				525DBF0324C8226500B95113 /* UIImage+extension.swift */,
 				525DBF0424C8226500B95113 /* String+extension.swift */,
 				525DBF0524C8226500B95113 /* UIScrollView+extension.swift */,
+				52FAEAC124D001B10008B973 /* MJRefresh+Rx.swift */,
 			);
 			path = LZ_Extension;
 			sourceTree = "<group>";
@@ -276,6 +288,17 @@
 				525DBF2424C8230100B95113 /* GitUserViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		52FAEAC924D01CDE0008B973 /* Moya-ObjectMapper */ = {
+			isa = PBXGroup;
+			children = (
+				52FAEAD224D01D040008B973 /* ObservableType+ObjectMapper.swift */,
+				52FAEAD324D01D060008B973 /* Single+ObjectMapper.swift */,
+				52FAEAC724D0150B0008B973 /* ActivityIndicator.swift */,
+				52FAEACE24D01CF70008B973 /* Response+ObjectMapper.swift */,
+			);
+			path = "Moya-ObjectMapper";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -434,13 +457,18 @@
 				525DBF1124C8226500B95113 /* LZBaseTabBar.swift in Sources */,
 				525DBF1024C8226500B95113 /* LZBaseViewModel.swift in Sources */,
 				525DBF1624C8226500B95113 /* LZBaseView.swift in Sources */,
+				52FAEAD524D01D060008B973 /* Single+ObjectMapper.swift in Sources */,
 				525DBF1F24C8226500B95113 /* LZHead.swift in Sources */,
 				525DBF3824C856AD00B95113 /* GitUserHeadView.swift in Sources */,
 				525DBF1824C8226500B95113 /* UIButton+extension.swift in Sources */,
 				525DBF1924C8226500B95113 /* UIView+Gradient.swift in Sources */,
 				525DBF2524C8230100B95113 /* GitUserViewController.swift in Sources */,
+				52FAEAC824D0150B0008B973 /* ActivityIndicator.swift in Sources */,
+				52FAEAC224D001B10008B973 /* MJRefresh+Rx.swift in Sources */,
 				525DBF1C24C8226500B95113 /* UIScrollView+extension.swift in Sources */,
+				52FAEACF24D01CF70008B973 /* Response+ObjectMapper.swift in Sources */,
 				525DBED224C8213000B95113 /* AppDelegate.swift in Sources */,
+				52FAEAD424D01D060008B973 /* ObservableType+ObjectMapper.swift in Sources */,
 				525DBF1424C8226500B95113 /* LZBaseTableView.swift in Sources */,
 				525DBF1224C8226500B95113 /* LZBaseTableViewCell.swift in Sources */,
 				525DBF2E24C8233C00B95113 /* GitUserModel.swift in Sources */,
@@ -621,7 +649,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.githubusers.GithubUsers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -641,7 +669,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.githubusers.GithubUsers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
