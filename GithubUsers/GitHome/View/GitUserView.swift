@@ -48,12 +48,24 @@ class GitUserView: LZBaseView {
         // bind tableData to tableView
         viewModel.tableData.asDriver()
         .drive(tableView.rx.items) { (tableView, row, element) in
-           let userCell = tableView.dequeueReusableCell(withIdentifier: "GitUserCell") as! GitUserCell
+            let userCell = tableView.dequeueReusableCell(withIdentifier: "GitUserCell") as! GitUserCell
             userCell.modelObject = element as AnyObject
             return userCell
         }
         .disposed(by: self.viewModel.disposeBag)
-        
+//
+//
+//        viewModel.tableData
+//            .bind(to: tableView.rx.items(cellIdentifier: "GitUserCell")){_,model,cell in
+//
+//                let userCell = cell as! GitUserCell
+//                userCell.modelObject = model
+//
+//        }.disposed(by: self.viewModel.disposeBag)
+//   
+                
+                
+    
         
         // bind tableView select event
 
