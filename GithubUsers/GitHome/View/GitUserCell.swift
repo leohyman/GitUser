@@ -88,9 +88,8 @@ class GitUserCell: LZBaseTableViewCell {
             let url = URL(string: userModel.avatarUrl ?? "")
             self.headImageView.kf.setImage(with: url, placeholder: UIImage(named: "icon_mine_team_defulat"))
             self.nameLab.text = userModel.login
-//            //计算名字的宽度
-//            self.scoreNumLab.text = userModel.node_id
-//            self.htmlUrlLab.text = userModel.html_url
+            self.scoreNumLab.text = String(userModel.score)
+            self.htmlUrlLab.text = userModel.htmlUrl
             
         }
 

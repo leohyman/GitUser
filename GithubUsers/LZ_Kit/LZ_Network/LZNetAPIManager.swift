@@ -64,9 +64,6 @@ extension GitHubAPI : TargetType{
         case .gitHubUsers(let search, let page):
             params["q"] = search
             params["page"] = page
-        
-            default: break
-            
         }
         return .requestParameters(parameters: params, encoding: URLEncoding.default)
 

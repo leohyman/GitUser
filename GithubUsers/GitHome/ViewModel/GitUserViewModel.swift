@@ -83,7 +83,7 @@ class GitUserViewModel: LZBaseViewModel {
             .flatMapLatest({ [weak self] _ -> Observable<GitHubUsers> in
                  guard let self = self else { return Observable.empty() }
                  self.page += 1
-             return self.request(login: self.keyword.value, page: self.page).trackActivity(self.footerLoading)
+                return self.request(login: self.keyword.value, page: self.page).trackActivity(self.footerLoading)
             }).subscribe(onNext: { [weak self] (gitHubUsers) in
                     guard let self = self else { return }
                     self.tableData.accept(self.tableData.value + gitHubUsers.items )
